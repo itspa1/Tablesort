@@ -1,0 +1,52 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Products</h1>
+<table id="myTable" class="tablesorter">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.price %></td>
+        <td><%= product.category.name %></td>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%= link_to 'New Product', new_product_path %>
+<button id="append">Append</button><br>
+<br>
+<input type='text' id='text'> enter append offset(default = 10)</input>
+<strong><span id="span"></span></strong>
+<script>
+$(document).ready(function(){ 
+        $("#myTable").tablesorter();
+         var offset = 10; 
+         var flag = 0;
+         $("#text")[0].onblur = function(){
+          flag = 1;
+          offset = 10 + text.value;
+         };
+         $("#append")[0].onclick = function(){
+          if(flag == 1){
+          var limit = text.value;
+        $.get("/products/append", {lim: limit,off: offset});
+        offset += limit;
+        }else{
+          $("#span")[0].innerHTML = "Please fill offset"
+        }    
+      }; 
+    }
+);   
+
+</script>
