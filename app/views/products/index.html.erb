@@ -26,7 +26,7 @@
 <%= link_to 'New Product', new_product_path %>
 <button id="append">Append</button><br>
 <br>
-<input type='text' id='text'> enter append offset(default = 10)</input>
+<input type='text' id='text'> enter append offset</input>
 <strong><span id="span"></span></strong>
 <script>
 $(document).ready(function(){ 
@@ -35,11 +35,11 @@ $(document).ready(function(){
          var flag = 0;
          $("#text")[0].onblur = function(){
           flag = 1;
-          offset = 10 + text.value;
+          offset = 10 + parseInt(text.value);
          };
          $("#append")[0].onclick = function(){
           if(flag == 1){
-          var limit = text.value;
+          var limit = parseInt(text.value);
         $.get("/products/append", {lim: limit,off: offset});
         offset += limit;
         }else{
